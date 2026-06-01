@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Plus — Search, Bookmark & Navigate Google Classroom</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a2e; line-height: 1.6; }
+    a { color: #2563eb; text-decoration: none; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #e5e7eb; z-index: 100; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    nav .logo { font-weight: 800; font-size: 1.1rem; color: #1a1a2e; }
+    nav .links { display: flex; gap: 1.5rem; align-items: center; }
+    nav .links a { color: #64748b; font-size: 0.9rem; font-weight: 500; }
+    nav .links a:hover { color: #2563eb; }
+    nav .links .cta { background: #2563eb; color: #fff !important; padding: 8px 20px; border-radius: 8px; font-weight: 600; }
+    nav .links .cta:hover { background: #1d4ed8; }
+
+    /* Hero */
+    .hero { padding: 140px 2rem 80px; text-align: center; background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 50%, #fefce8 100%); }
+    .hero .badge { display: inline-block; background: #dbeafe; color: #2563eb; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: 3rem; font-weight: 800; line-height: 1.15; max-width: 700px; margin: 0 auto 1.5rem; }
+    .hero h1 em { font-style: italic; color: #2563eb; }
+    .hero p { font-size: 1.15rem; color: #475569; max-width: 550px; margin: 0 auto 2rem; }
+    .hero .buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero .btn-primary { background: #2563eb; color: #fff; padding: 14px 32px; border-radius: 12px; font-weight: 700; font-size: 1rem; }
+    .hero .btn-primary:hover { background: #1d4ed8; }
+    .hero .btn-secondary { color: #64748b; padding: 14px 32px; font-weight: 600; font-size: 1rem; }
+
+    /* Features */
+    .features { padding: 80px 2rem; max-width: 1100px; margin: 0 auto; }
+    .features .label { text-align: center; color: #2563eb; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .features h2 { text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 3rem; }
+    .features .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 2rem; transition: box-shadow 0.2s; }
+    .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+    .card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .card p { color: #64748b; font-size: 0.95rem; }
+
+    /* How it works */
+    .how { padding: 80px 2rem; background: #f8fafc; }
+    .how h2 { text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 3rem; }
+    .steps { display: flex; gap: 2rem; max-width: 900px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .step { flex: 1; min-width: 240px; text-align: center; padding: 1.5rem; }
+    .step .num { width: 48px; height: 48px; background: #2563eb; color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; margin-bottom: 1rem; }
+    .step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .step p { color: #64748b; font-size: 0.9rem; }
+
+    /* Privacy section */
+    .privacy-section { padding: 80px 2rem; max-width: 800px; margin: 0 auto; }
+    .privacy-section h2 { text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+    .privacy-section .subtitle { text-align: center; color: #64748b; margin-bottom: 2.5rem; }
+    .perm { display: flex; gap: 1rem; padding: 1.5rem; background: #f8fafc; border-radius: 12px; margin-bottom: 1rem; align-items: flex-start; }
+    .perm .picon { font-size: 1.5rem; flex-shrink: 0; }
+    .perm strong { display: block; margin-bottom: 0.25rem; }
+    .perm p { color: #64748b; font-size: 0.9rem; margin: 0; }
+
+    /* Footer */
+    footer { text-align: center; padding: 2rem; border-top: 1px solid #e5e7eb; color: #94a3b8; font-size: 0.85rem; }
+    footer a { color: #64748b; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      nav .links a:not(.cta) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">📌 Classroom Plus</a>
+  <div class="links">
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="https://chromewebstore.google.com" class="cta">Install Free</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="badge">✨ Free Chrome Extension</span>
+  <h1>Your Google Classroom, <em>supercharged</em></h1>
+  <p>Search across all posts, bookmark important announcements, and navigate your classes faster — all without leaving Classroom.</p>
+  <div class="buttons">
+    <a href="https://chromewebstore.google.com" class="btn-primary">Add to Chrome — It's Free</a>
+    <a href="#features" class="btn-secondary">See Features ↓</a>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="label">Features</div>
+  <h2>Everything Classroom should have had</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="icon">🔍</div>
+      <h3>Smart Search</h3>
+      <p>Semantic search with synonym expansion, stemming, and TF-IDF ranking. Finds posts even when you don't remember the exact words.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📌</div>
+      <h3>Bookmark Posts</h3>
+      <p>Pin important announcements and assignments. Your bookmarks stay synced and accessible from the sidebar in every class.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🎯</div>
+      <h3>Filter by Type</h3>
+      <p>Quickly filter between stream posts, assignments, and materials. Cut through the noise to find exactly what you need.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌙</div>
+      <h3>Dark Mode</h3>
+      <p>Easy on the eyes during late-night study sessions. Toggle dark mode from the extension popup with one click.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>Works Instantly</h3>
+      <p>No setup needed. Install and the search bar appears on every class page. Lightweight with zero impact on performance.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔒</div>
+      <h3>100% Private</h3>
+      <p>All data stays in your browser. No external servers, no tracking, no analytics. Your classroom data is yours alone.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <h2>Up and running in 30 seconds</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <h3>Install</h3>
+      <p>Add Classroom Plus from the Chrome Web Store. It's free, no account needed.</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h3>Open Classroom</h3>
+      <p>Navigate to any class on classroom.google.com. The search bar appears automatically at the top.</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h3>Search & Bookmark</h3>
+      <p>Type to search across all posts. Click the pin icon to bookmark anything important.</p>
+    </div>
+  </div>
+</section>
+
+<section class="privacy-section">
+  <h2>Your data stays yours</h2>
+  <p class="subtitle">We only request the minimum permissions needed for each feature to work.</p>
+
+  <div class="perm">
+    <div class="picon">📚</div>
+    <div>
+      <strong>Classroom Read Access</strong>
+      <p>Read your course list, announcements, assignments, and materials so the search feature can find posts across all your classes.</p>
+    </div>
+  </div>
+
+  <div class="perm">
+    <div class="picon">💾</div>
+    <div>
+      <strong>Local Storage</strong>
+      <p>Stores your bookmarks and search cache locally in your browser. Nothing is sent to external servers.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="privacy.html">Privacy Policy</a> · <a href="mailto:realdivyanshgupta@gmail.com">Contact</a>
+  <br>© 2026 Classroom Plus. Not affiliated with Google.
+</footer>
+
+</body>
+</html>
