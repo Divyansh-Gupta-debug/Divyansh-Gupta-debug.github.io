@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Pro — Supercharge Google Classroom</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue: #1a73e8;
+      --blue-dark: #1558b0;
+      --green: #34a853;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #e0e0e0;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 60px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--blue); text-decoration: none; }
+    .nav-brand span { background: var(--blue); color: #fff; border-radius: 8px; padding: 4px 10px; font-size: 13px; font-weight: 700; }
+    .nav-cta { background: var(--blue); color: #fff; border: none; border-radius: 8px; padding: 8px 20px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: var(--blue-dark); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+      color: #fff; text-align: center;
+      padding: 90px 24px 80px;
+    }
+    .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 100px; padding: 6px 16px; font-size: 13px; font-weight: 500; margin-bottom: 24px; }
+    .hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.15; margin-bottom: 18px; }
+    .hero h1 span { color: #fbbc04; }
+    .hero p { font-size: 18px; opacity: 0.9; max-width: 560px; margin: 0 auto 36px; line-height: 1.6; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: #fff; color: var(--blue); border-radius: 10px; padding: 14px 28px; font-size: 15px; font-weight: 700; text-decoration: none; transition: transform 0.15s; }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-secondary { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); border-radius: 10px; padding: 14px 28px; font-size: 15px; font-weight: 600; text-decoration: none; transition: border-color 0.15s; }
+    .btn-secondary:hover { border-color: #fff; }
+
+    /* FEATURES */
+    .features { max-width: 1080px; margin: 0 auto; padding: 80px 24px; }
+    .section-label { text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-title { text-align: center; font-size: clamp(26px, 3vw, 38px); font-weight: 700; margin-bottom: 10px; }
+    .section-sub { text-align: center; color: var(--muted); font-size: 16px; margin-bottom: 56px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
+    .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-3px); }
+    .card-icon { font-size: 32px; margin-bottom: 14px; }
+    .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* HOW IT WORKS */
+    .how { background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 24px; }
+    .steps { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+    .step { display: flex; gap: 20px; align-items: flex-start; }
+    .step-num { min-width: 40px; height: 40px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; }
+    .step-body h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .step-body p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* PRIVACY */
+    .privacy { max-width: 720px; margin: 0 auto; padding: 80px 24px; text-align: center; }
+    .privacy h2 { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
+    .privacy p { color: var(--muted); font-size: 15px; line-height: 1.7; margin-bottom: 14px; }
+    .privacy-link { color: var(--blue); text-decoration: none; font-weight: 600; }
+
+    /* CTA BANNER */
+    .cta-banner { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: #fff; text-align: center; padding: 70px 24px; }
+    .cta-banner h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 700; margin-bottom: 12px; }
+    .cta-banner p { font-size: 16px; opacity: 0.85; margin-bottom: 32px; }
+
+    /* FOOTER */
+    footer { background: #fff; border-top: 1px solid var(--border); padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--muted); }
+    footer a { color: var(--blue); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 16px; }
+      footer { justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="#">📚 <span>PRO</span> Classroom Pro</a>
+    <a class="nav-cta" href="https://chrome.google.com/webstore" target="_blank">Add to Chrome — Free</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">✨ Chrome Extension for Google Classroom</div>
+    <h1>Google Classroom,<br><span>Supercharged.</span></h1>
+    <p>Search every post instantly, pin what matters, and search inside PDF attachments — all without leaving Classroom.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="https://chrome.google.com/webstore" target="_blank">🚀 Add to Chrome — It's Free</a>
+      <a class="btn-secondary" href="#features">See Features ↓</a>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">Everything you wish Classroom had</h2>
+    <p class="section-sub">Built by a student, for students.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Smart Search</h3>
+        <p>Find any post, announcement, or assignment in seconds. Smart Search understands what you mean — works completely offline, no external APIs.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📄</div>
+        <h3>Deep Search</h3>
+        <p>Search inside attached PDFs, Docs, and Slides. Find content buried inside documents — not just post titles.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📌</div>
+        <h3>Pin Posts</h3>
+        <p>Bookmark any stream post or assignment. Access all your pins from a dedicated panel, filter by type, and jump straight to any saved post.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📎</div>
+        <h3>File Name Search</h3>
+        <p>Search posts by the name of attached files. Type "end-sem-solution" and find the exact post it's attached to — instantly.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌙</div>
+        <h3>Dark Mode</h3>
+        <p>A beautiful dark theme for Google Classroom. Easy on the eyes, especially during late-night study sessions.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h3>100% Private</h3>
+        <p>All data stays in your browser. Nothing is sent to any server. No tracking, no ads, no data collection — ever.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div style="max-width:1080px;margin:0 auto;">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-title" style="margin-bottom:48px;">Up and running in 30 seconds</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Install the Extension</h4>
+          <p>Click "Add to Chrome" and install Classroom Pro from the Chrome Web Store. No sign-up required.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Open Google Classroom</h4>
+          <p>Navigate to any class. The search bar appears automatically at the top of the page.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Start Searching & Pinning</h4>
+          <p>Type anything to search posts instantly. Click the Pin button on any post to save it for quick access later.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Use Deep Search for Documents</h4>
+          <p>Toggle Deep Search and press Enter to search inside all attached files — PDFs, Docs, Slides and more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="privacy">
+    <h2>🔒 Your Privacy Comes First</h2>
+    <p>Classroom Pro stores all data locally in your browser using Chrome's built-in storage. Nothing is ever transmitted to an external server.</p>
+    <p>The extension only requests read-only access to your Classroom and Drive data — it cannot modify, delete, or create any content.</p>
+    <p>No analytics. No ads. No data collection. Period.</p>
+    <a class="privacy-link" href="https://divyansh-gupta-debug.github.io/Privacy-Policy-/pro-privacy.html" target="_blank">Read full Privacy Policy →</a>
+  </section>
+
+  <section class="cta-banner">
+    <h2>Ready to take control of your Classroom?</h2>
+    <p>Free forever. No account needed. Works instantly.</p>
+    <a class="btn-primary" href="https://chrome.google.com/webstore" target="_blank">🚀 Add to Chrome — It's Free</a>
+  </section>
+
+  <footer>
+    <span>© 2026 Divyansh Gupta · Classroom Pro</span>
+    <span>
+      <a href="https://divyansh-gupta-debug.github.io/Privacy-Policy-/pro-privacy.html">Privacy Policy</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:realdivyanshgupta@gmail.com">Contact</a>
+    </span>
+  </footer>
+
+</body>
+</html>
